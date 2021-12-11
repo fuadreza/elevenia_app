@@ -4,11 +4,13 @@ import 'package:elevenia_app/core/utils/connectivity_util.dart';
 import 'package:elevenia_app/core/utils/navigation_util.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:elevenia_app/injection/injection.dart' as di;
 import 'package:elevenia_app/core/route/main_route.dart' as router;
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
   await connectivity.init();
 
   runApp(const MyApp());
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: appTitle,
+      title: APP_TITLE,
       darkTheme: CustomTheme().dark,
       theme: CustomTheme().light,
       home: const HomePage(),

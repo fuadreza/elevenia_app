@@ -1,4 +1,4 @@
 
-const String apiKey = '';
 
-const String appTitle = 'Elevenia';
+
+const String APP_TITLE = 'Elevenia';

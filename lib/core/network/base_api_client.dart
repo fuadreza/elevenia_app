@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:elevenia_app/core/error/exceptions.dart';
 import 'package:http/http.dart' as http;
+import 'package:xml2json/xml2json.dart';
 
 class BaseApiClient {
   final http.Client client;
-  final String _baseUrl = 'api.elevenia.co.id/rest';
+  final Xml2Json xml2Json = Xml2Json();
+  final String _apiKey = '721407f393e84a28593374cc2b347a98';
+  final String _baseUrl = 'api.elevenia.co.id';
 
   BaseApiClient({required this.client});
 
@@ -14,15 +19,16 @@ class BaseApiClient {
   }) async {
     final Uri uri = params == null
         ? path == null
-            ? Uri.https(_baseUrl, url)
-            : Uri.https(_baseUrl, url + path)
+            ? Uri.http(_baseUrl, url)
+            : Uri.http(_baseUrl, url + path)
         : path == null
-            ? Uri.https(_baseUrl, url, params)
-            : Uri.https(_baseUrl, url + path, params);
+            ? Uri.http(_baseUrl, url, params)
+            : Uri.http(_baseUrl, url + path, params);
 
     try {
       final Map<String, String> headers = <String, String>{
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/xml',
+        'openapikey': _apiKey,
       };
 
       final http.Response response = await client.get(
@@ -31,12 +37,15 @@ class BaseApiClient {
       );
 
       if (response.statusCode == 200) {
-        return response.body;
+        xml2Json.parse(response.body);
+        return xml2Json.toParker();
       } else {
         throw ServerException();
       }
     } on Exception {
+      print('Error server');
       throw ServerException();
     }
   }
+
 }

@@ -11,9 +11,10 @@ linter:
     always_require_non_null_named_parameters: true
     always_specify_types: true
 
-    camel_case_types: true
+    camel_case_types: false
     camel_case_extensions: true
     eol_at_end_of_file: true
+    constant_identifier_names: false
     file_names: true
     prefer_final_locals: true
     type_init_formals: true
