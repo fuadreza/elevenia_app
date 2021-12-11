@@ -1,10 +1,8 @@
-package core.error;
-
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => <Object?>[];
 }
 
 class ServerFailure extends Failure {}
