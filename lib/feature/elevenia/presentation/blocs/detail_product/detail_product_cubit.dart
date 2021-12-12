@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:elevenia_app/feature/elevenia/domain/entities/detail_product/detail_product.dart';
-import 'package:elevenia_app/feature/elevenia/domain/entities/product/product.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_detail_product_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/detail_product/detail_product_state.dart';
 

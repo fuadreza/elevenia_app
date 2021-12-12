@@ -1,6 +1,8 @@
 import 'package:elevenia_app/core/network/base_api_client.dart';
 import 'package:elevenia_app/feature/elevenia/data/repositories/product_repository_impl.dart';
 import 'package:elevenia_app/feature/elevenia/data/services/api/product_service.dart';
+import 'package:elevenia_app/feature/elevenia/data/services/database/dao/cart_products_dao.dart';
+import 'package:elevenia_app/feature/elevenia/data/services/database/dao/detail_product_dao.dart';
 import 'package:elevenia_app/feature/elevenia/data/services/database/dao/products_dao.dart';
 import 'package:elevenia_app/feature/elevenia/data/services/database/database_helper.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/local/product_local_data_source.dart';
@@ -77,6 +79,8 @@ Future<void> init() async {
   di.registerLazySingleton<ProductLocalDataSource>(
     () => ProductLocalDataSourceImpl(
       productsDao: di(),
+      detailProductDao: di(),
+      cartProductsDao: di(),
     ),
   );
 
@@ -98,6 +102,18 @@ Future<void> init() async {
 
   di.registerLazySingleton<ProductsDao>(
     () => ProductsDao(
+      databaseHelper: di(),
+    ),
+  );
+
+  di.registerLazySingleton<DetailProductDao>(
+    () => DetailProductDao(
+      databaseHelper: di(),
+    ),
+  );
+
+  di.registerLazySingleton<CartProductsDao>(
+    () => CartProductsDao(
       databaseHelper: di(),
     ),
   );

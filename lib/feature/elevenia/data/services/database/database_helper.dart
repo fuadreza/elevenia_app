@@ -1,4 +1,6 @@
 
+import 'package:elevenia_app/feature/elevenia/data/services/database/table/cart_products_table.dart';
+import 'package:elevenia_app/feature/elevenia/data/services/database/table/detail_product_table.dart';
 import 'package:elevenia_app/feature/elevenia/data/services/database/table/products_table.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -24,6 +26,8 @@ class DatabaseHelper {
       '$path/elevenia.db',
       onCreate: (Database db, int version) async {
         await db.execute(ProductsTable.create());
+        await db.execute(DetailProductTable.create());
+        await db.execute(CartProductsTable.create());
       },
       version: 1,
     );

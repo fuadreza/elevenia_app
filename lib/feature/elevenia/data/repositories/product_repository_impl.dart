@@ -29,9 +29,11 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<DetailProduct> getDetailProduct(String productNumber) async {
     try {
-      return await remoteDataSource.getDetailProduct(productNumber);
+      final DetailProduct detailProduct = await remoteDataSource.getDetailProduct(productNumber);
+      localDataSource.saveDetailProduct(detailProduct);
+      return detailProduct;
     } on ServerFailure {
-      return await remoteDataSource.getDetailProduct(productNumber);
+      return await localDataSource.getDetailProduct(productNumber);
     }
   }
 }

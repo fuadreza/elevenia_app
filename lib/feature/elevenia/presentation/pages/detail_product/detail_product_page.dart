@@ -35,7 +35,7 @@ class DetailProductPage extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return Text('Something occur');
+                    return Text('Something\'s wrong');
                   }
                 },
               ),
