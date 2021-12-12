@@ -1,6 +1,10 @@
 import 'package:elevenia_app/core/network/base_api_client.dart';
 import 'package:elevenia_app/feature/elevenia/data/repositories/product_repository_impl.dart';
 import 'package:elevenia_app/feature/elevenia/data/services/api/product_service.dart';
+import 'package:elevenia_app/feature/elevenia/data/services/database/dao/products_dao.dart';
+import 'package:elevenia_app/feature/elevenia/data/services/database/database_helper.dart';
+import 'package:elevenia_app/feature/elevenia/data/sources/local/product_local_data_source.dart';
+import 'package:elevenia_app/feature/elevenia/data/sources/local/product_local_data_source_impl.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source_impl.dart';
 import 'package:elevenia_app/feature/elevenia/domain/repositories/product_repository.dart';
@@ -55,17 +59,24 @@ Future<void> init() async {
   di.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
       remoteDataSource: di(),
+      localDataSource: di(),
     ),
   );
 
   //#endregion
 
 
-  //#region REMOTE DATA SOURCE
+  //#region DATA SOURCE
 
   di.registerLazySingleton<ProductRemoteDataSource>(
     () => ProductRemoteDataSourceImpl(
       service: di(),
+    ),
+  );
+
+  di.registerLazySingleton<ProductLocalDataSource>(
+    () => ProductLocalDataSourceImpl(
+      productsDao: di(),
     ),
   );
 
@@ -83,12 +94,27 @@ Future<void> init() async {
   //#endregion
 
 
+  //#region DAO
+
+  di.registerLazySingleton<ProductsDao>(
+    () => ProductsDao(
+      databaseHelper: di(),
+    ),
+  );
+
+  //#endregion
+
+
   //#region CORE
 
   di.registerLazySingleton<BaseApiClient>(
-        () => BaseApiClient(
+      () => BaseApiClient(
       client: di(),
     ),
+  );
+
+  di.registerLazySingleton<DatabaseHelper>(
+      () => DatabaseHelper(),
   );
 
   //#endregion

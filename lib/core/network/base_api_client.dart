@@ -38,7 +38,6 @@ class BaseApiClient {
 
       if (response.statusCode == 200) {
         xml2Json.parse(response.body);
-        log(xml2Json.toParker());
         return xml2Json.toParker();
       } else {
         throw ServerException();

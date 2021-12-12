@@ -84,7 +84,7 @@ class _ProductsPageState extends State<ProductsPage> {
                   ),
                 );
               } else {
-                return Text('Something occur');
+                return Text('Something\'s wrong');
               }
             },
           ),
