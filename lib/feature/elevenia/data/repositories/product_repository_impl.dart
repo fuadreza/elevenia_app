@@ -1,6 +1,7 @@
 
 import 'package:elevenia_app/core/error/failures.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source.dart';
+import 'package:elevenia_app/feature/elevenia/domain/entities/detail_product/detail_product.dart';
 import 'package:elevenia_app/feature/elevenia/domain/entities/product/product.dart';
 import 'package:elevenia_app/feature/elevenia/domain/repositories/product_repository.dart';
 
@@ -20,4 +21,12 @@ class ProductRepositoryImpl extends ProductRepository {
     }
   }
 
+  @override
+  Future<DetailProduct> getDetailProduct(String productNumber) async {
+    try {
+      return await remoteDataSource.getDetailProduct(productNumber);
+    } on ServerFailure {
+      return await remoteDataSource.getDetailProduct(productNumber);
+    }
+  }
 }

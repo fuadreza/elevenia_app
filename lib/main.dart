@@ -23,12 +23,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: APP_TITLE,
-      darkTheme: CustomTheme().dark,
+      darkTheme: CustomTheme().light,
       theme: CustomTheme().light,
       home: const HomePage(),
       navigatorKey: navigatorKey,
       onGenerateRoute: router.generateRoute,
-      initialRoute: router.routeHomePage,
+      initialRoute: router.ROUTE_HOME_PAGE,
     );
   }
 }

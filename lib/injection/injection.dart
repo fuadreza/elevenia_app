@@ -4,7 +4,9 @@ import 'package:elevenia_app/feature/elevenia/data/services/api/product_service.
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source_impl.dart';
 import 'package:elevenia_app/feature/elevenia/domain/repositories/product_repository.dart';
+import 'package:elevenia_app/feature/elevenia/domain/usecases/get_detail_product_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_products_use_case.dart';
+import 'package:elevenia_app/feature/elevenia/presentation/blocs/detail_product/detail_product_cubit.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/home/products_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -22,13 +24,25 @@ Future<void> init() async {
     ),
   );
 
+  di.registerFactory(
+      () => DetailProductCubit(
+      getDetailProductUseCase: di(),
+    ),
+  );
+
   //#endregion
 
 
   //#region USE CASE
 
   di.registerLazySingleton(
-    () => GetProductUseCase(
+    () => GetProductsUseCase(
+      repository: di(),
+    ),
+  );
+
+  di.registerLazySingleton(
+      () => GetDetailProductUseCase(
       repository: di(),
     ),
   );

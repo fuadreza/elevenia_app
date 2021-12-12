@@ -7,4 +7,5 @@ class ProductApiUrl {
 
   static const String CONTROLLER_PRODUCT = '$BASE_SERVER_ENV/prodservices';
   static const String URL_PRODUCT_LIST = '$CONTROLLER_PRODUCT/product/listing';
+  static const String URL_PRODUCT_DETAIL = '$CONTROLLER_PRODUCT/product/details';
 }

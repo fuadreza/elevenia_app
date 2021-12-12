@@ -3,11 +3,11 @@ import 'package:flutter/widgets.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class NavigationUtil {
-  static navigateTo({
-    required String route,
-    Object? arguments,
-    Function? afterPop,
-  }) {
+  static navigateTo(
+    String route,
+    {dynamic arguments,
+    Function? afterPop,}
+  ) {
     if (arguments != null) {
       if (afterPop != null) {
         navigatorKey.currentState

@@ -13,4 +13,9 @@ class ProductService {
     };
     return apiClient.get(url: ProductApiUrl.URL_PRODUCT_LIST, params: params);
   }
+
+  Future<String> getDetailProduct(String productNumber) async {
+    final String path = '/$productNumber';
+    return apiClient.get(url: ProductApiUrl.URL_PRODUCT_DETAIL, path: path);
+  }
 }
