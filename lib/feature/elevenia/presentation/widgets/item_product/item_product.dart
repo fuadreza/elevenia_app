@@ -1,6 +1,10 @@
 
 import 'package:elevenia_app/core/extensions/string_extension.dart';
+import 'package:elevenia_app/core/theme/app_colors.dart';
+import 'package:elevenia_app/core/utils/color_util.dart';
+import 'package:elevenia_app/core/utils/icon_util.dart';
 import 'package:elevenia_app/feature/elevenia/domain/entities/product/product.dart';
+import 'package:elevenia_app/feature/elevenia/presentation/widgets/chip/simple_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -19,35 +23,69 @@ class ItemProduct extends StatelessWidget {
     return GestureDetector(
       onTap: onItemPressed,
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        elevation: 0.5,
+        margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         child: Container(
           padding: EdgeInsets.all(5),
-          child: Row(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: EdgeInsets.all(20),
-                child: Icon(
-                  Icons.shopping_bag,
-                ),
-              ),
               Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product.productNumber,
-                      ),
-                      Text(
-                        product.productName,
-                      ),
-                      Text(
-                        product.sellPrice.toRupiahFormat(),
-                      ),
-                    ],
+                  margin: EdgeInsets.all(10),
+                  child: Center(
+                    child: Icon(
+                      IconUtil.getRandomIcon(),
+                      size: 50,
+                    ),
                   ),
                 ),
+              ),
+              Wrap(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          product.productNumber,
+                          style: TextStyle(
+                            color: AppColors.darkGrey,
+                            fontSize: 10,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        SimpleChip(
+                          text: product.categoryName,
+                          textSize: 10,
+                          backgroundColor: ColorUtil.getRandomColor(),
+                          fontWeight: FontWeight.w400,
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          product.productName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          product.sellPrice.toRupiahFormat(),
+                          style: TextStyle(
+                            color: AppColors.danger,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

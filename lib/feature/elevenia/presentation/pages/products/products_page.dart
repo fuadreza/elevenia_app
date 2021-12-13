@@ -47,48 +47,75 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: BlocProvider(
-        create: (_) => di<ProductsCubit>(),
-        child: Center(
-          child: BlocConsumer<ProductsCubit, ProductsState>(
-            listener: (BuildContext context, ProductsState state) {},
-            builder: (BuildContext context, ProductsState state) {
-              if (state is Init) {
-                context.read<ProductsCubit>().getProducts(1);
-                _pagingController.addPageRequestListener((pageKey) {
-                  _fetchPage(context, pageKey);
-                });
-                return Text('Loading Products');
-              } else if (state is Loaded) {
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: PagedListView<int, Product>(
-                          pagingController: _pagingController,
-                          builderDelegate: PagedChildBuilderDelegate<Product>(
-                            itemBuilder: (context, item, index) {
-                              return ItemProduct(
-                                product: item,
-                                onItemPressed: () {
-                                  _onProductSelected(item.productNumber);
-                                },
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return Text('Something\'s wrong');
-              }
-            },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 70, left: 20),
+            child: Text(
+              'Our Product',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
+          Expanded(
+            child: BlocProvider(
+              create: (_) => di<ProductsCubit>(),
+              child: Center(
+                child: BlocConsumer<ProductsCubit, ProductsState>(
+                  listener: (BuildContext context, ProductsState state) {},
+                  builder: (BuildContext context, ProductsState state) {
+                    if (state is Init) {
+                      context.read<ProductsCubit>().getProducts(1);
+                      _pagingController.addPageRequestListener((pageKey) {
+                        _fetchPage(context, pageKey);
+                      });
+                      return Text('Loading Products');
+                    } else if (state is Loaded) {
+                      return _displayOnProductsFound();
+                    } else {
+                      return Text('Something\'s wrong');
+                    }
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _displayOnProductsFound() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: PagedGridView<int, Product>(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 2.0,
+                mainAxisSpacing: 2.0,
+                childAspectRatio: 0.8,
+              ),
+              pagingController: _pagingController,
+              builderDelegate: PagedChildBuilderDelegate<Product>(
+                itemBuilder: (context, item, index) {
+                  return ItemProduct(
+                    product: item,
+                    onItemPressed: () {
+                      _onProductSelected(item.productNumber);
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

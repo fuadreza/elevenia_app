@@ -159,7 +159,13 @@ class SearchPage extends StatelessWidget {
           height: 16,
         ),
         Expanded(
-          child: ListView(
+          child: GridView(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 2.0,
+              mainAxisSpacing: 2.0,
+              childAspectRatio: 0.8,
+            ),
             children: List.generate(
               products.length,
                   (index) {
