@@ -39,7 +39,7 @@ class CartPage extends StatelessWidget {
                       context.read<CartCubit>().getCartProducts();
                       return Text('Loading Products');
                     } else if (state is Loaded) {
-                      return _displayOnProductsFound(state.products);
+                      return _displayOnProductsFound(context, state.products);
                     } else if (state is Error) {
                       return Text(state.message);
                     } else {
@@ -55,7 +55,7 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  Widget _displayOnProductsFound(List<DetailProduct> listDetailProduct) {
+  Widget _displayOnProductsFound(BuildContext context, List<DetailProduct> listDetailProduct) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: Column(
@@ -68,7 +68,7 @@ class CartPage extends StatelessWidget {
                   return ItemCart(
                     detailProduct: listDetailProduct[index],
                     onItemPressed: () {
-                      _onProductSelected(listDetailProduct[index].productNumber);
+                      _onProductSelected(context, listDetailProduct[index].productNumber);
                     },
                   );
                 },
@@ -80,7 +80,10 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  _onProductSelected(String productNumber) {
-    NavigationUtil.navigateTo(ROUTE_DETAIL_PRODUCT_PAGE, arguments: productNumber);
+  _onProductSelected(BuildContext context, String productNumber) {
+    NavigationUtil.navigateTo(ROUTE_DETAIL_PRODUCT_PAGE, arguments: productNumber, afterPop: () {
+        context.read<CartCubit>().getCartProducts();
+      },
+    );
   }
 }

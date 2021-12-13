@@ -29,7 +29,16 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<DetailProduct> getDetailProduct(String productNumber) async {
     try {
-      final DetailProduct detailProduct = await remoteDataSource.getDetailProduct(productNumber);
+      final DetailProduct resultDetailProduct = await remoteDataSource.getDetailProduct(productNumber);
+      final bool isProductOnCart = await localDataSource.isProductOnCart(productNumber);
+      final DetailProduct detailProduct = DetailProduct(
+          productName: resultDetailProduct.productName,
+          productNumber: resultDetailProduct.productNumber,
+          productImage: resultDetailProduct.productImage,
+          productDescription: resultDetailProduct.productDescription,
+          sellPrice: resultDetailProduct.sellPrice,
+          isOnCart: isProductOnCart,
+      );
       localDataSource.saveDetailProduct(detailProduct);
       return detailProduct;
     } on ServerFailure {

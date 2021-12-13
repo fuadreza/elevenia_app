@@ -7,7 +7,7 @@ class DetailProductModel extends DetailProduct {
   final String productImage;
   final String productDescription;
   final String sellPrice;
-  final int cartQuantity;
+  final bool isOnCart;
 
   const DetailProductModel({
     required this.productName,
@@ -15,8 +15,8 @@ class DetailProductModel extends DetailProduct {
     required this.productImage,
     required this.productDescription,
     required this.sellPrice,
-    required this.cartQuantity,
-  }): super(productName: productName, productNumber: productNumber, productImage: productImage, productDescription: productDescription, sellPrice: sellPrice, cartQuantity: cartQuantity);
+    required this.isOnCart,
+  }): super(productName: productName, productNumber: productNumber, productImage: productImage, productDescription: productDescription, sellPrice: sellPrice, isOnCart: isOnCart);
 
   factory DetailProductModel.fromJson(Map<String, dynamic> json) {
     return DetailProductModel(
@@ -25,7 +25,7 @@ class DetailProductModel extends DetailProduct {
       productImage: json['prdImage01'] ?? '',
       productDescription: json['htmlDetail'] ?? '',
       sellPrice: json['selPrc'] ?? '',
-      cartQuantity: json['cartQty'] ?? 0,
+      isOnCart: false,
     );
   }
 }

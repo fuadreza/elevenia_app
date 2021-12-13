@@ -60,6 +60,10 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
     }
   }
 
+  @override
+  Future<bool> isProductOnCart(String productNumber) async {
+    return await cartProductsDao.isProductOnCart(productNumber);
+  }
 
   @override
   Future<List<DetailProduct>> getCartProducts() async {

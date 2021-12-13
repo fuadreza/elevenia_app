@@ -33,6 +33,26 @@ class DetailProductCubit extends Cubit<DetailProductState> {
   Future<void> addProductToCart(DetailProduct detailProduct) async {
     try {
       await addProductToCartUseCase.invoke(detailProduct);
+      final DetailProduct? product = await getDetailProductUseCase.invoke(detailProduct.productNumber);
+      if(product != null) {
+        emit(Loaded(product: product));
+      } else {
+        emit(Error(message: 'Failed to load Product'));
+      }
+    } on Exception {
+      throw Exception();
+    }
+  }
+
+  Future<void> removeProductFromCart(DetailProduct detailProduct) async {
+    try {
+      await removeProductFromCartUseCase.invoke(detailProduct);
+      final DetailProduct? product = await getDetailProductUseCase.invoke(detailProduct.productNumber);
+      if(product != null) {
+        emit(Loaded(product: product));
+      } else {
+        emit(Error(message: 'Failed to load Product'));
+      }
     } on Exception {
       throw Exception();
     }

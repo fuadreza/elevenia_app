@@ -49,4 +49,19 @@ class CartProductsDao {
 
     return <DetailProduct>[];
   }
+
+  Future<bool> isProductOnCart(String productNumber) async {
+    final Database? db = await databaseHelper.database;
+    final List<Map<String, dynamic>>? results = await db?.query(
+      CartProductsTable.tableName,
+      where: '${CartProductsTable.columnProductNumber} = ?',
+      whereArgs: <String>[productNumber],
+    );
+
+    if(results != null) {
+      return results.isNotEmpty;
+    }
+    return false;
+  }
+
 }

@@ -14,6 +14,8 @@ abstract class ProductLocalDataSource {
 
   Future<void> saveDetailProduct(DetailProduct detailProduct);
 
+  Future<bool> isProductOnCart(String productNumber);
+
   Future<void> addProductToCart(DetailProduct detailProduct);
 
   Future<void> removeProductFromCart(DetailProduct detailProduct);
