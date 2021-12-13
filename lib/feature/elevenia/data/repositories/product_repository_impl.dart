@@ -37,6 +37,19 @@ class ProductRepositoryImpl extends ProductRepository {
     }
   }
 
+  @override
+  Future<List<Product>> searchProducts(String keyword) async {
+    List<Product> productList = <Product>[];
+    try {
+      final List<Product> products = await remoteDataSource.getProducts('1');
+      productList.addAll(products);
+    } on ServerFailure {
+      final List<Product> products = await localDataSource.getProducts();
+      productList.addAll(products);
+    }
+    final List<Product> filteredList = productList.where((Product item) => item.productName.toLowerCase().contains(keyword.toLowerCase())).toList();
+    return filteredList;
+  }
 
   @override
   Future<List<DetailProduct>> getCartProducts() async {

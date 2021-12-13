@@ -15,9 +15,11 @@ import 'package:elevenia_app/feature/elevenia/domain/usecases/get_cart_products_
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_detail_product_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_products_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/remove_product_from_cart_use_case.dart';
+import 'package:elevenia_app/feature/elevenia/domain/usecases/search_products_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/cart/cart_cubit.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/detail_product/detail_product_cubit.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/home/products_cubit.dart';
+import 'package:elevenia_app/feature/elevenia/presentation/blocs/search/search_products_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,10 +38,16 @@ Future<void> init() async {
   );
 
   di.registerFactory(
-      () => DetailProductCubit(
+    () => DetailProductCubit(
       getDetailProductUseCase: di(),
       addProductToCartUseCase: di(),
       removeProductFromCartUseCase: di(),
+    ),
+  );
+
+  di.registerFactory(
+    () => SearchProductsCubit(
+      searchProductsUseCase: di(),
     ),
   );
 
@@ -62,6 +70,12 @@ Future<void> init() async {
 
   di.registerLazySingleton(
     () => GetDetailProductUseCase(
+      repository: di(),
+    ),
+  );
+
+  di.registerLazySingleton(
+    () => SearchProductsUseCase(
       repository: di(),
     ),
   );
@@ -155,13 +169,13 @@ Future<void> init() async {
   //#region CORE
 
   di.registerLazySingleton<BaseApiClient>(
-      () => BaseApiClient(
+    () => BaseApiClient(
       client: di(),
     ),
   );
 
   di.registerLazySingleton<DatabaseHelper>(
-      () => DatabaseHelper(),
+    () => DatabaseHelper(),
   );
 
   //#endregion

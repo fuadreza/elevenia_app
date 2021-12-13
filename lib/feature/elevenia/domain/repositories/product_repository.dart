@@ -10,6 +10,8 @@ abstract class ProductRepository {
 
   Future<List<DetailProduct>> getCartProducts();
 
+  Future<List<Product>> searchProducts(String keyword);
+
   Future<void> addProductToCart(DetailProduct detailProduct);
 
   Future<void> removeProductFromCart(DetailProduct detailProduct);
