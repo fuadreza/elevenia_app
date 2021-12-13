@@ -10,8 +10,12 @@ import 'package:elevenia_app/feature/elevenia/data/sources/local/product_local_d
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source.dart';
 import 'package:elevenia_app/feature/elevenia/data/sources/remote/product_remote_data_source_impl.dart';
 import 'package:elevenia_app/feature/elevenia/domain/repositories/product_repository.dart';
+import 'package:elevenia_app/feature/elevenia/domain/usecases/add_product_to_cart_use_case.dart';
+import 'package:elevenia_app/feature/elevenia/domain/usecases/get_cart_products_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_detail_product_use_case.dart';
 import 'package:elevenia_app/feature/elevenia/domain/usecases/get_products_use_case.dart';
+import 'package:elevenia_app/feature/elevenia/domain/usecases/remove_product_from_cart_use_case.dart';
+import 'package:elevenia_app/feature/elevenia/presentation/blocs/cart/cart_cubit.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/detail_product/detail_product_cubit.dart';
 import 'package:elevenia_app/feature/elevenia/presentation/blocs/home/products_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -24,6 +28,7 @@ Future<void> init() async {
   //! Features - Elevenia
 
   //#region BLOC
+
   di.registerFactory(
     () => ProductsCubit(
       getProductsUseCase: di(),
@@ -33,6 +38,14 @@ Future<void> init() async {
   di.registerFactory(
       () => DetailProductCubit(
       getDetailProductUseCase: di(),
+      addProductToCartUseCase: di(),
+      removeProductFromCartUseCase: di(),
+    ),
+  );
+
+  di.registerFactory(
+    () => CartCubit(
+      getCartProductsUseCase: di(),
     ),
   );
 
@@ -48,7 +61,25 @@ Future<void> init() async {
   );
 
   di.registerLazySingleton(
-      () => GetDetailProductUseCase(
+    () => GetDetailProductUseCase(
+      repository: di(),
+    ),
+  );
+
+  di.registerLazySingleton(
+    () => GetCartProductsUseCase(
+      repository: di(),
+    ),
+  );
+
+  di.registerLazySingleton(
+    () => AddProductToCartUseCase(
+      repository: di(),
+    ),
+  );
+
+  di.registerLazySingleton(
+    () => RemoveProductFromCartUseCase(
       repository: di(),
     ),
   );

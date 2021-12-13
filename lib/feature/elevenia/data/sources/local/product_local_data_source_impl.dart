@@ -26,7 +26,6 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
     }
   }
 
-
   @override
   Future<DetailProduct> getDetailProduct(String productNumber) async {
     try {
@@ -56,6 +55,34 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
   Future<void> saveDetailProduct(DetailProduct detailProduct) async {
     try {
       return await detailProductDao.insert(detailProduct);
+    } on Error {
+      throw Exception();
+    }
+  }
+
+
+  @override
+  Future<List<DetailProduct>> getCartProducts() async {
+    try {
+      return await cartProductsDao.getCartProducts();
+    } on Error {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<void> addProductToCart(DetailProduct detailProduct) async {
+    try {
+      return await cartProductsDao.insert(detailProduct);
+    } on Error {
+      throw Exception();
+    }
+  }
+
+  @override
+  Future<void> removeProductFromCart(DetailProduct detailProduct) async {
+    try {
+      return await cartProductsDao.remove(detailProduct);
     } on Error {
       throw Exception();
     }

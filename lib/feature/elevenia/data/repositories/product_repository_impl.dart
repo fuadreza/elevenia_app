@@ -36,4 +36,33 @@ class ProductRepositoryImpl extends ProductRepository {
       return await localDataSource.getDetailProduct(productNumber);
     }
   }
+
+
+  @override
+  Future<List<DetailProduct>> getCartProducts() async {
+    try {
+      final List<DetailProduct> products = await localDataSource.getCartProducts();
+      return products;
+    } on Exception {
+      throw Exception('Cannot load cart');
+    }
+  }
+
+  @override
+  Future<void> addProductToCart(DetailProduct detailProduct) async {
+    try {
+      return await localDataSource.addProductToCart(detailProduct);
+    } on Exception {
+      throw Exception('Cannot add to cart');
+    }
+  }
+
+  @override
+  Future<void> removeProductFromCart(DetailProduct detailProduct) async {
+    try {
+      return await localDataSource.removeProductFromCart(detailProduct);
+    } on Exception {
+      throw Exception('Cannot remove from cart');
+    }
+  }
 }

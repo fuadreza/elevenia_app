@@ -6,10 +6,15 @@ abstract class ProductLocalDataSource {
 
   Future<List<Product>> getProducts();
 
+  Future<List<DetailProduct>> getCartProducts();
+
   Future<DetailProduct> getDetailProduct(String productNumber);
 
   Future<void> saveProducts(List<Product> products);
 
   Future<void> saveDetailProduct(DetailProduct detailProduct);
 
+  Future<void> addProductToCart(DetailProduct detailProduct);
+
+  Future<void> removeProductFromCart(DetailProduct detailProduct);
 }

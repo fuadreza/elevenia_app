@@ -31,7 +31,19 @@ class DetailProductPage extends StatelessWidget {
                   } else if (state is Loaded) {
                     return Container(
                       child: Center(
-                        child: Text('Product : ${state.product.productName}'),
+                        child: Column(
+                          children: [
+                            Text('Product : ${state.product.productName}'),
+                            GestureDetector(
+                              onTap: () {
+                                context.read<DetailProductCubit>().addProductToCart(state.product);
+                              },
+                              child: Icon(
+                                Icons.add_shopping_cart,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   } else {

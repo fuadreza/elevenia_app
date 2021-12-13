@@ -7,6 +7,7 @@ class DetailProduct extends Equatable {
   final String productImage;
   final String productDescription;
   final String sellPrice;
+  final int cartQuantity;
 
   const DetailProduct({
     required this.productName,
@@ -14,8 +15,9 @@ class DetailProduct extends Equatable {
     required this.productImage,
     required this.productDescription,
     required this.sellPrice,
+    required this.cartQuantity,
   });
 
   @override
-  List<Object?> get props => <Object?>[productName, productNumber, productImage, productDescription, sellPrice];
+  List<Object?> get props => <Object?>[productName, productNumber, productImage, productDescription, sellPrice, cartQuantity];
 }
